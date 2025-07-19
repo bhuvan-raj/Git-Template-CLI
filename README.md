@@ -1,5 +1,8 @@
 # Git Template CLI Tool 🚀
 
+
+<img src="https://github.com/bhuvan-raj/Git-Template-CLI/blob/main/assets/template.png" alt="Banner" />
+
 ![Git Template CLI Tool Banner](https://img.shields.io/badge/git--template--cli-v0.1.0-blue?style=for-the-badge&logo=github)
 [![PyPI - Version](https://img.shields.io/pypi/v/git-template-cli?style=for-the-badge&logo=pypi&logoColor=white)](https://pypi.org/project/git-template-cli/)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/git-template-cli?style=for-the-badge&logo=python&logoColor=white)](https://pypi.org/project/git-template-cli/)
