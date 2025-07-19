@@ -29,7 +29,7 @@ Whether you're starting a new React component, a Python microservice, or just a 
 
 ## Installation
 
-### Via PyPI (Recommended)
+### 1.  Via PyPI (Recommended)
 
 The easiest way to install `git-template-cli` is directly from PyPI:
 
@@ -39,7 +39,10 @@ pip install git-template-cli
 
 This command will install the tool and make the `git template` command available in your terminal.
 
-### From Source
+
+ **OR**
+
+### 2. From Source (if pip not working)
 
 If you prefer to install from the source code (e.g., for development or contributing), follow these steps:
 
@@ -181,21 +184,19 @@ You can easily extend `git-template-cli` by adding your own custom templates.
 
 ## Contributing
 
-We welcome contributions\! If you have ideas for new features, templates, or bug fixes, please open an issue or submit a pull request on the [GitHub repository](https://www.google.com/search?q=https://github.com/BUBU-Git/git-template-tool).
+We welcome contributions\! If you have ideas for new features, templates, or bug fixes, please open an issue or submit a pull request on the [GitHub repository](https://www.google.com/search?q=https://github.com/bhuvan-raj/Git-Template-CLI).
 
 -----
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](https://www.google.com/search?q=LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
 
 -----
 
 ## About The Author
 
-This tool was crafted with passion and efficiency in mind.
-
-Developed by **BUBU**
+Developed by **BUBU** 
 
 -----
 
