@@ -1,4 +1,2 @@
-# MANIFEST.in
-# Include everything within the templates directory inside the git_template_cli package
 include src/git_template_cli/templates/*
 recursive-include src/git_template_cli/templates *

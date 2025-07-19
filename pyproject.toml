@@ -1,28 +1,24 @@
-# pyproject.toml
+# pyproject.toml - FINAL CORRECTED VERSION
 [project]
 name = "git-template-cli"
-version = "0.1.1"
+version = "0.1.0" # Remember to update this version for new PyPI uploads
 description = "A Git CLI tool to create new repositories or branches from predefined templates."
-authors = [{ name = "BUBU", email = "bhuvanraj-k@proton.me" }]
+authors = [{ name = "BUBU", email = "your_email@example.com" }]
 dependencies = [
     "Click>=8.0.0",
 ]
 readme = "README.md"
 requires-python = ">=3.8"
-license = { file = "LICENSE" } # If you have a LICENSE file
+license = "MIT"
 
 [project.scripts]
-git-template = "git_template_cli.cli:cli" # This connects your 'git-template' command to your cli.py
+git-template = "git_template_cli.cli:cli"
 
 [build-system]
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-packages = ["git_template_cli"] # Point to your package in src/
+packages = ["git_template_cli"]
 package-dir = {"" = "src"}
-
-[tool.setuptools.package-data]
-git_template_cli = ["templates/*/*"] # Include all files in templates/ subdirectories
-
-include-package-data = true
+include-package-data = true # This line tells setuptools to look for MANIFEST.in
