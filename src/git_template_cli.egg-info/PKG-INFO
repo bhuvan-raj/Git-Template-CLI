@@ -1,0 +1,10 @@
+Metadata-Version: 2.4
+Name: git-template-cli
+Version: 0.1.0
+Summary: A Git CLI tool to create new repositories or branches from predefined templates.
+Author-email: BUBU <bhuvanraj-k@proton.me>
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: Click>=8.0.0
+Dynamic: license-file

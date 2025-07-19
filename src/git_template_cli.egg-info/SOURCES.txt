@@ -1,0 +1,11 @@
+LICENSE
+README.md
+pyproject.toml
+src/git_template_cli/__init__.py
+src/git_template_cli/cli.py
+src/git_template_cli.egg-info/PKG-INFO
+src/git_template_cli.egg-info/SOURCES.txt
+src/git_template_cli.egg-info/dependency_links.txt
+src/git_template_cli.egg-info/entry_points.txt
+src/git_template_cli.egg-info/requires.txt
+src/git_template_cli.egg-info/top_level.txt

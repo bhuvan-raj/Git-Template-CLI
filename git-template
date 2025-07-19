@@ -1,0 +1,19 @@
+# git-template
+#!/bin/bash
+
+# Find the directory of the git-template-tool (where git_template_cli.py is)
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+TOOL_DIR="${SCRIPT_DIR}" # Assuming git-template is in the root of git-template-tool
+
+# Activate the virtual environment if it exists
+if [ -f "${TOOL_DIR}/venv/bin/activate" ]; then
+    source "${TOOL_DIR}/venv/bin/activate"
+elif [ -f "${TOOL_DIR}/venv/Scripts/activate" ]; then # For Windows Git Bash
+    source "${TOOL_DIR}/venv/Scripts/activate"
+fi
+
+# Execute the Python script with the arguments passed to git-template
+python "${TOOL_DIR}/git_template_cli.py" "$@"
+
+# Deactivate the virtual environment (optional, depending on preference)
+# deactivate

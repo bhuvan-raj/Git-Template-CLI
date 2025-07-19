@@ -1,0 +1,23 @@
+# pyproject.toml
+[project]
+name = "git-template-cli"
+version = "0.1.0"
+description = "A Git CLI tool to create new repositories or branches from predefined templates."
+authors = [{ name = "BUBU", email = "bhuvanraj-k@proton.me" }]
+dependencies = [
+    "Click>=8.0.0",
+]
+readme = "README.md"
+requires-python = ">=3.8"
+license = { file = "LICENSE" } # If you have a LICENSE file
+
+[project.scripts]
+git-template = "git_template_cli.cli:cli" # This connects your 'git-template' command to your cli.py
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["git_template_cli"] # Point to your package in src/
+package-dir = {"" = "src"}

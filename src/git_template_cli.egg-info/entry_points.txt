@@ -1,0 +1,2 @@
+[console_scripts]
+git-template = git_template_cli.cli:cli
