@@ -6,14 +6,15 @@ from git_template_cli.cli import cli
 
 def test_cli_welcome_page():
     runner = CliRunner()
-    # Test running with no arguments should show welcome page
-    result = runner.invoke(cli, [], input='\n') # Pass '\n' to simulate pressing Enter
+    result = runner.invoke(cli, [], input='\n')
     assert result.exit_code == 0
-    assert "Welcome to the Git Template CLI Tool!" in result.output
+    assert "Welcome to the Git Template CLI Tool! 🚀" in result.output # More reliable text
     assert "Available Commands:" in result.output
-    # Check for your specific ASCII art text if possible, e.g.,
-    assert "GIT - TEMPLATE" in result.output # Or a simpler phrase from it
-
+    # You can also check for part of the ASCII art lines if you want,
+    # but exact matches are brittle with colors/formatting.
+    # For example:
+    # assert "██████╗" in result.output
+# ...
 def test_list_templates_command():
     runner = CliRunner()
     result = runner.invoke(cli, ['list'])

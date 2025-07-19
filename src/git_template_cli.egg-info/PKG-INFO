@@ -3,8 +3,235 @@ Name: git-template-cli
 Version: 0.1.0
 Summary: A Git CLI tool to create new repositories or branches from predefined templates.
 Author-email: BUBU <bhuvanraj-k@proton.me>
+License: MIT License
+        
+        Copyright (c) 2025 Bhuvan Raj
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
 Requires-Python: >=3.8
 Description-Content-Type: text/markdown
 License-File: LICENSE
 Requires-Dist: Click>=8.0.0
 Dynamic: license-file
+
+# Git Template CLI Tool 🚀
+
+
+<img src="https://github.com/bhuvan-raj/Git-Template-CLI/blob/main/assets/template.png" alt="Banner" />
+
+![Git Template CLI Tool Banner](https://img.shields.io/badge/git--template--cli-v0.1.0-blue?style=for-the-badge&logo=github)
+[![PyPI - Version](https://img.shields.io/pypi/v/git-template-cli?style=for-the-badge&logo=pypi&logoColor=white)](https://pypi.org/project/git-template-cli/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/git-template-cli?style=for-the-badge&logo=python&logoColor=white)](https://pypi.org/project/git-template-cli/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+
+## Overview
+
+The `git-template-cli` tool is a powerful command-line interface designed to streamline your development workflow by allowing you to quickly generate new projects, components, or services from predefined templates. Say goodbye to repetitive manual setups and boilerplate code!
+
+Whether you're starting a new React component, a Python microservice, or just a basic project structure, `git-template-cli` can set it up in seconds, ensuring consistency across your codebase.
+
+---
+
+## Features
+
+* **Quick Project/Component Generation:** Instantly create new items from pre-configured templates.
+* **Placeholder Replacement:** Automatically replaces template-specific placeholders (like component names, project names, or years) with your provided values.
+* **Standardized Structure:** Enforces consistent project and component structures across your team.
+* **Git Integration:** Optionally creates a new Git branch and stages the generated files automatically.
+* **Extensible:** Easily add your own custom templates to suit your specific needs.
+* **Interactive Welcome:** A friendly welcome screen guides new users.
+
+---
+
+## Installation
+
+### 1.  Via PyPI (Recommended)
+
+The easiest way to install `git-template-cli` is directly from PyPI:
+
+```bash
+pip install git-template-cli
+````
+
+This command will install the tool and make the `git template` command available in your terminal.
+
+
+ **OR**
+
+### 2. From Source (if pip not working)
+
+If you prefer to install from the source code (e.g., for development or contributing), follow these steps:
+
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/BUBU-Git/git-template-tool.git](https://github.com/BUBU-Git/git-template-tool.git) # Replace with your actual GitHub URL
+    cd git-template-tool
+    ```
+2.  **Create and activate a virtual environment:**
+    ```bash
+    python -m venv venv
+    source venv/bin/activate # On Windows: .\venv\Scripts\activate
+    ```
+3.  **Install dependencies:**
+    ```bash
+    pip install click
+    ```
+4.  **Install the tool in editable mode (for development):**
+    ```bash
+    pip install -e .
+    ```
+5.  **Add the `git-template` wrapper to your PATH (if not using `pip install -e .`):**
+    If you did not use `pip install -e .` (which sets up the entry point automatically), you'll need to manually ensure the `git-template` wrapper script is executable and in your system's PATH.
+    ```bash
+    chmod +x git-template
+    ```
+    Then, add the directory containing `git-template` to your shell's PATH. For example, in your `~/.bashrc` or `~/.zshrc`:
+    ```bash
+    export PATH="/path/to/your/cloned/git-template-tool:$PATH"
+    # After editing, run: source ~/.bashrc (or ~/.zshrc)
+    ```
+
+-----
+
+## Usage
+
+Once installed, you can invoke the tool using `git template`.
+
+### Welcome Screen
+
+Running `git template` without any arguments will display a friendly welcome screen with available commands:
+
+```bash
+git template
+```
+
+*(Press Enter to continue after the welcome screen)*
+
+### Listing Available Templates
+
+To see a list of all templates you can use:
+
+```bash
+git template list
+```
+
+Example Output:
+
+```
+Available templates:
+  - basic
+  - python-service
+  - react-component
+```
+
+### Creating a New Item from a Template
+
+To create a new project, component, or service from a template:
+
+```bash
+git template create <template-name> <new-item-name> [OPTIONS]
+```
+
+  * `<template-name>`: The name of the template you want to use (e.g., `react-component`, `basic`, `python-service`).
+  * `<new-item-name>`: The desired name for your new item (e.g., `MyButton`, `MyNewProject`, `UserAuthService`). This name will be used to create a new directory and replace placeholders within the template files.
+
+**Options:**
+
+  * `--path <directory>`, `-p <directory>`: Specifies the destination directory where the new item should be created. **Defaults to the current working directory.**
+      * Example: `git template create react-component MyFeatureComponent --path src/components`
+  * `--no-git-add`: Do not automatically `git add` the newly created files.
+  * `--no-git-branch`: Do not automatically create a new Git branch for the new item.
+
+**Examples:**
+
+1.  **Create a new React component named `MyAwesomeButton` in the current directory:**
+    ```bash
+    git template create react-component MyAwesomeButton
+    ```
+2.  **Create a new basic project named `MyNewWebsite` in a `~/projects` folder (assuming it exists):**
+    ```bash
+    git template create basic MyNewWebsite --path ~/projects
+    ```
+3.  **Create a Python service `LoggerService` without creating a new Git branch:**
+    ```bash
+    git template create python-service LoggerService --no-git-branch
+    ```
+
+-----
+
+## Adding Your Own Templates
+
+You can easily extend `git-template-cli` by adding your own custom templates.
+
+1.  **Locate the `templates` directory:**
+    If installed via PyPI, this directory will be within your Python's site-packages. For simpler management, you can configure the tool to look for templates in a custom location (future enhancement, or you can fork and modify `TEMPLATE_BASE_DIR` in `cli.py` for now).
+    **For development/source installation**, the `templates` directory is directly in your cloned repository's root: `git-template-tool/templates/`.
+
+2.  **Create a new template directory:** Inside the `templates/` directory, create a new folder named after your desired template (e.g., `my-custom-template`).
+
+    ```
+    git-template-tool/templates/
+    ├── my-custom-template/
+    │   ├── src/
+    │   │   └── index.js
+    │   └── README.md
+    └── ... (existing templates)
+    ```
+
+3.  **Populate your template:** Add all the files and subfolders that should be part of your template inside `my-custom-template/`.
+
+4.  **Use Placeholders (Optional but Recommended):**
+    You can include placeholders in your template files that will be automatically replaced when `git template create` is used.
+
+      * **Recommendation:** For now, the tool looks for placeholders that match the template's *general purpose* and the `new-item-name`.
+          * For `react-component`: `COMPONENT_NAME` (PascalCase), `component_name_kebab` (kebab-case).
+          * For `python-service`: `SERVICE_NAME` (as provided), `service_name_snake` (snake\_case).
+          * For `basic`: `PROJECT_NAME` (as provided), `LICENSE_TYPE` (hardcoded as "MIT License"), `YEAR` (current year).
+      * You'll need to update the `placeholders` dictionary in `src/git_template_cli/cli.py` to define how your custom template's placeholders should be replaced. For example:
+        ```python
+        # In src/git_template_cli/cli.py, inside the 'create' function's placeholders dict
+        "my-custom-template": {
+            "MY_TEMPLATE_VAR": new_item_name,
+            "another_var_kebab": kebab_case(new_item_name)
+        }
+        ```
+
+-----
+
+## Contributing
+
+We welcome contributions\! If you have ideas for new features, templates, or bug fixes, please open an issue or submit a pull request on the [GitHub repository](https://www.google.com/search?q=https://github.com/bhuvan-raj/Git-Template-CLI).
+
+-----
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+
+-----
+
+## About The Author
+
+Developed by **BUBU** 
+
+-----
+
+```
+```

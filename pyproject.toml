@@ -1,7 +1,7 @@
 # pyproject.toml
 [project]
 name = "git-template-cli"
-version = "0.1.0"
+version = "0.1.1"
 description = "A Git CLI tool to create new repositories or branches from predefined templates."
 authors = [{ name = "BUBU", email = "bhuvanraj-k@proton.me" }]
 dependencies = [
@@ -21,3 +21,8 @@ build-backend = "setuptools.build_meta"
 [tool.setuptools]
 packages = ["git_template_cli"] # Point to your package in src/
 package-dir = {"" = "src"}
+
+[tool.setuptools.package-data]
+git_template_cli = ["templates/*/*"] # Include all files in templates/ subdirectories
+
+include-package-data = true
