@@ -1,20 +1,16 @@
-
-# src/git_template_cli/cli.py
 import click
 import os
 import shutil
 import re
 import sys
 from datetime import datetime
-import importlib.resources as pkg_resources # <-- Crucial import for package data
-from importlib.abc import Traversable # <-- Crucial import for robust copying
+import importlib.resources as pkg_resources 
+from importlib.abc import Traversable 
 
 
-# Define the logical path to your templates *within the installed package*
-# This means it expects 'templates' to be directly inside your 'git_template_cli' Python package
 TEMPLATES_RESOURCE_PATH = "git_template_cli.templates"
 
-# --- Helper functions (pascal_case, kebab_case) remain the same ---
+
 def pascal_case(name):
     """Converts a string to PascalCase (e.g., my-component -> MyComponent)."""
     return "".join(word.capitalize() for word in re.split(r'[-_]', name))
@@ -24,7 +20,7 @@ def kebab_case(name):
     s1 = re.sub('(.)([A-Z][a-z]+)', r'\1-\2', name)
     return re.sub('([a-z0-9])([A-Z])', r'\1-\2', s1).lower()
 
-# --- NEW: Robust Resource Copying Function ---
+
 def copy_resource_dir(source_traversable: Traversable, destination_path: str):
     """
     Copies the contents of a Traversable directory (resource) to a filesystem path.
@@ -40,29 +36,22 @@ def copy_resource_dir(source_traversable: Traversable, destination_path: str):
                 with open(dest_item_path, 'wb') as dst_file:
                     shutil.copyfileobj(src_file, dst_file)
 
-# --- NEW: Helper to get the base directory for *listing* templates ---
+
 def get_templates_base_dir_for_listing():
     """
     Returns the Traversable object for the templates directory within the package.
     Used for iterating and listing contents. Includes a fallback for local development.
     """
     try:
-        # This is the primary way to access templates when installed
         return pkg_resources.files(TEMPLATES_RESOURCE_PATH)
     except FileNotFoundError:
-        # Fallback for local development if running directly from source
-        # and templates are not yet "packaged" via a local install.
-        # This path assumes cli.py is in src/git_template_cli/ and templates is parallel to it.
         current_file_dir = os.path.dirname(os.path.abspath(__file__))
         return os.path.join(current_file_dir, "templates")
 
-
-# --- list_templates function updated to use Traversable for listing ---
 def list_templates():
     """Lists all available templates."""
     templates_resource = get_templates_base_dir_for_listing()
 
-    # Determine if we got a filesystem path (dev mode) or a Traversable object (installed mode)
     if isinstance(templates_resource, str):
         templates_dir_path = templates_resource
         if not os.path.isdir(templates_dir_path):
@@ -70,7 +59,7 @@ def list_templates():
                                    "Please ensure 'templates/' is correctly packaged with the tool or present in source.", fg='red'), err=True)
             return []
         templates = [d for d in os.listdir(templates_dir_path) if os.path.isdir(os.path.join(templates_dir_path, d))]
-    else: # It's a Traversable object from an installed package
+    else: 
         templates = []
         try:
             for item in templates_resource.iterdir():
@@ -89,13 +78,10 @@ def list_templates():
         click.echo(click.style("\nNo templates found in the template directory.", fg='yellow'))
     return templates
 
-
-# --- Main CLI Group with Welcome Message (unchanged ASCII art) ---
 def display_welcome_page():
     """Displays the welcome page for the CLI tool."""
-    click.clear()  # Clears the terminal screen
+    click.clear() 
 
-    # Corrected ASCII Art for "GIT TEMPLATE"
     click.echo(click.style(" ██████╗ ██╗████████╗      ", fg='green'))
     click.echo(click.style("██╔════╝ ██║╚══██╔══╝      ", fg='green'))
     click.echo(click.style("██║  ███╗██║   ██║         ", fg='green'))
@@ -126,7 +112,7 @@ def display_welcome_page():
     click.echo("  git template <command> --help")
     click.echo("  Example: git template create --help")
     click.echo(click.style("\nPress Enter to continue or Ctrl+C to exit...", fg='yellow'))
-    click.pause(info="")  # Waits for user to press Enter
+    click.pause(info="") 
 
 
 @click.group(invoke_without_command=True)
@@ -138,7 +124,7 @@ def cli(ctx):
     if ctx.invoked_subcommand is None:
         display_welcome_page()
 
-# --- create command updated to use copy_resource_dir ---
+
 @cli.command()
 @click.argument('template_name', type=str)
 @click.argument('new_item_name', type=str)
@@ -152,19 +138,16 @@ def create(template_name, new_item_name, path, no_git_add, no_git_branch): # Fix
 
     Example: git template create react-component MyButton --path src/components
     """
-    # Get the Traversable object for the specific template resource
     try:
         source_template_resource = pkg_resources.files(TEMPLATES_RESOURCE_PATH) / template_name
-        if not source_template_resource.is_dir(): # Check if the specific template exists as a directory resource
+        if not source_template_resource.is_dir(): 
             raise FileNotFoundError(f"Template '{template_name}' not found as a directory resource.")
     except (FileNotFoundError, ModuleNotFoundError) as e:
-        # Fallback for local development if resources not packaged, or template just doesn't exist.
-        # This will present the error message using the os.path approach.
         templates_base_local_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "templates")
         template_path_local = os.path.join(templates_base_local_path, template_name)
         click.echo(click.style(f"Error: Template '{template_name}' not found at '{template_path_local}'. "
                                f"Details: {e}", fg='red'), err=True)
-        list_templates() # Call list_templates to help user see available
+        list_templates()
         sys.exit(1)
 
 
@@ -177,13 +160,10 @@ def create(template_name, new_item_name, path, no_git_add, no_git_branch): # Fix
     click.echo(f"Creating '{new_item_name}' from template '{template_name}' in '{destination_path}'...")
 
     try:
-        # Use the new copy_resource_dir function here
         copy_resource_dir(source_template_resource, destination_path)
     except Exception as e:
         click.echo(click.style(f"Error copying template files: {e}", fg='red'), err=True)
         sys.exit(1)
-
-    # Placeholder replacement logic (remains unchanged)
     placeholders = {
         "react-component": {
             "COMPONENT_NAME": pascal_case(new_item_name),
@@ -206,14 +186,12 @@ def create(template_name, new_item_name, path, no_git_add, no_git_branch): # Fix
         for filename in files:
             filepath = os.path.join(root, filename)
 
-            # Rename files containing placeholders
             for original_ph, replacement_val in template_placeholders.items():
                 if original_ph in filename:
                     new_filename = filename.replace(original_ph, replacement_val)
                     os.rename(filepath, os.path.join(root, new_filename))
                     filepath = os.path.join(root, new_filename)
 
-            # Replace content inside files
             if os.path.isfile(filepath):
                 try:
                     with open(filepath, 'r', encoding='utf-8') as f:
@@ -234,7 +212,6 @@ def create(template_name, new_item_name, path, no_git_add, no_git_branch): # Fix
 
     click.echo(click.style(f"Successfully created '{new_item_name}'!", fg='green'))
 
-    # Git integration (remains unchanged)
     try:
         if not no_git_branch:
             git_root_process = os.system("git rev-parse --is-inside-work-tree > /dev/null 2>&1")
@@ -260,7 +237,6 @@ def create(template_name, new_item_name, path, no_git_add, no_git_branch): # Fix
     except Exception as e:
         click.echo(click.style(f"Warning during Git operations: {e}", fg='yellow'), err=True)
 
-# --- list command remains unchanged ---
 @cli.command()
 def list():
     """Lists all available templates."""
